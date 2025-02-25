@@ -1,0 +1,46 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/public/fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+html, 
+body,
+#root,
+.app {
+    height: 100%;
+    width: 100%;
+    font-family: "AvenirNextLTPro", sans-serif;
+}
+img {
+  max-width: none!important;
+}
+
+.mobile-menu {
+  background-color: #e0F7fa;
+}
+
+.dropdown-menu {
+  background-color: white;
+}
+
+.dropdown-icon {
+  display: inline-block;
+  transform: transition-transform duration-300;
+}
+
+.input-custom::placeholder {
+  color: #999;
+  font-size: 16px;
+}
+
+.input-custom {
+  padding: 12px 16px;
+  border: none;
+}
