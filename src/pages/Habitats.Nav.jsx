@@ -138,69 +138,79 @@ const HabitatsNav = () => {
 
        {/*Mobile Menu Items */}
        {isMobileMenuOpen && (
-        <div className="md:hidden bg-white sm:w-full text-blue-50 px-4 py-6">
-          {navItems.map((item, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex items-center gap-1">
-                <Link
-                  to={item.link}
-                  className="block text-blue-50 transition-colors duration-300"
-                  onClick={(e) => {
-                    if(item.dropdownItems) {
-                      e.preventDefault();
-                      toggleDropdown(index)
-                    }
-                  }}
-                >
-                  {item.label}
-                </Link>
+        <div className='md:hidden bg-white sm:w-full font-semibold text-blue-50 px-4 py-6'>
+            {navItems.map((item, index) => (
+                <div key={index} className='mb-4'>
+                    <div className='flex justify-between'>
+                        {item.dropdownItems ? (
+                            <>
+                                <Link
+                                    to={item.link}
+                                    className='block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap'
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    {item.label}
+                                </Link>
+                                <Link
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleDropdown(index)}
+                                    }
+                                    className='p-1 hover:text-light-blue transition-colors duration-300'
+                                    aria-expanded={openDropdowns[index]}
+                                    aria-label="Toggle dropdown"
+                                >
+                                    <ChevronDown 
+                                        size={16}
+                                        className={`transform transition-transform duration-300 ${openDropdowns[index] ? 'rotate-180' : ''}`}
+                                    />
+                                </Link>
+                            </>
+                        ) : (
+                            <Link
+                                to={item.link}
+                                className="block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                    {item.label}
+                            </Link>
+                        )}
+                    </div>
 
-                {item.dropdownItems && (
-                  <button
-                    onClick={() => toggleDropdown(index)}
-                    className="p-1 hover:text-blue transition-colors duration-300 ml-auto"
-                    aria-expanded={openDropdowns[index]}
-                    aria-label="Toggle dropdown"
-                  >
-                    <ChevronDown 
-                      size={16}
-                      color='blue'
-                      className={`transform transition-transform duration-300 ${
-                        openDropdowns[index] ? 'rotate-180' : ''}`}
-                    />
-                  </button>
-                )}
-              </div>
-
-              {item.dropdownItems && openDropdowns[index] && (
-                <ul className="mt-2 pl-4 shadow-lg">
-                  {item.dropdownItems.map((dropdownItem, dropIndex) => (
-                    <li key={dropIndex} className="mb-2">
-                      <Link
-                        to={dropdownItem.link}
-                        className="block px-4 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
-                      >
-                        {dropdownItem.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
+                    {item.dropdownItems && openDropdowns[index] && (
+                        <ul className='mt-2 pl-4 shadow-lg'>
+                            {item.dropdownItems.map((dropdownItems, dropIndex) => (
+                                <li key={dropIndex} className='mb-2'>
+                                    <Link
+                                        to={dropdownItems.link}
+                                        className="block py-2 px-4 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {dropdownItems.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        
+                        </ul>
+                    )}
+                </div>
+            ))}
         </div>
-       )}
+    )}
 
-       <section className="md:flex md:flex-row sm:flex sm:flex-col md:justify-around items-center pt-10">
-          <div className='md:flex sm:flex sm:flex-col md:space-y-2 sm:pt-10 sm:mr-52'>
-            <div className="md:w-full sm:w-full md:py-1 sm:py-1 bg-white "></div>
-            <h1 className="md:text-6xl sm:text-3xl text-white font-bold">HABITATS</h1>
-          </div>
+       {/*Hero Section*/}
+       <section className="md:flex sm:flex sm:flex-col items-center md:pt-20 sm:pt-10 w-[90%] mx-auto">
+          <div className='md:flex md:flex-row sm:flex sm:flex-col justify-between sm:w-full'>
+            <div className='md:w-1/2 sm:w-full'>
+              <div className="md:w-[52%] sm:w-[44%] md:py-1 sm:py-1 bg-white mb-2"></div>
+              <h1 className="md:text-6xl sm:text-3xl text-white font-bold sm:mb-3">HABITATS</h1> 
+            </div>
 
-          <div className="md:w-1/3 sm:w-[90%] flex flex-col items-center pt-6">
-            <p className='text-lg font-normal text-white sm:text-left'>Showcase your solution to amplify the reach of your business and connect with other businesses, investors and local authorities to develop new business opportunities,
-              business and connect.
-            </p>
+            <div className='md:w-[50%] sm:w-full'>
+              <p className='text-lg font-normal text-white sm:text-left'>Showcase your solution to amplify the reach of your business and connect with other businesses, investors and local authorities to develop new business opportunities,
+               business and connect.
+              </p>
+            </div>     
           </div>
        </section>
     </div>

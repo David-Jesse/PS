@@ -89,8 +89,8 @@ const Locationmain = () => {
                   onClick={() =>setView('map')}
                   style={{position: 'absolute', bottom: '10px', left: '6px', fontSize: '100'}}
                   >
-                    Find out more <a href="#"><img src={whiteVector} alt="white vector" className='w-auto h-auto'/></a>
-                </Link>
+                    Find out more <img src={whiteVector} alt="white vector" className='w-auto h-auto'/>
+                  </Link>
            </div>
             ))}
           </div>

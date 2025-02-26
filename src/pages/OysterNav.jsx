@@ -149,7 +149,7 @@ const OysterNav = () => {
             </header>
                   
             {isMobileMenuOpen && (
-              <div className="md:hidden bg-white sm:w-full text-blue-50 px-4 py-6">
+              <div className="md:hidden bg-white sm:w-full font-semibold text-blue-50 px-4 py-6">
                   {navItems.map((item, index) => (
                       <div key={index} className="mb-4">
                           <div className="flex items-center gap-1">
@@ -169,10 +169,10 @@ const OysterNav = () => {
                                       aria-label="Toggle dropdown"
                                   >
                                       <ChevronDown 
-                                          size={16}
-                                          color="blue"
-                                          className={`transform transition-transform duration-300 ${
-                                              openDropdowns[index] ? 'rotate-180' : ''}`}
+                                        size={16}
+                                        color="blue"
+                                        className={`transform transition-transform duration-300 ${
+                                        openDropdowns[index] ? 'rotate-180' : ''}`}
                                       />
                                   </button>
                               )}
@@ -185,6 +185,7 @@ const OysterNav = () => {
                                           <Link 
                                               to={dropdownItem.link}
                                               className="block px-4 py-2 text-blue-50 hover:text-light-blue tranasition-colors duration-300 whitespace-nowrap"
+                                              onClick={() => setIsMobileMenuOpen(false)}
                                           >
                                               {dropdownItem.label}
                                           </Link>

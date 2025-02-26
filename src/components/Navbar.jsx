@@ -140,50 +140,54 @@ const Navbar = () => {
 
           {/*Mobile menu Items */}
           {isMobileMenuOpen && (
-            <div className="md:hidden bg-white sm:w-full text-blue-50 px-4 py-6">
+            <div className='md:hidden bg-white sm:w-full font-semibold text-blue-50 px-4 py-6'>
               {navItems.map((item, index) => (
                 <div key={index} className='mb-4'>
-                  <div className='flex items-center gap-1'>
-                    <Link 
-                      to={item.link}
-                      className="block text-blue-50 transition-colors duration-300"
-                      onClick={(e) => {
-                        if(item.dropdownItems) {
-                          e.preventDefault();
-                          toggleDropdown(index);
-                        }
-                      }}
-                    >
-                      {item.label}
-                  </Link>
-
-                  {item.dropdownItems && (
-                    <button
-                      onClick={() => toggleDropdown(index)}
-                      className="p-1 hover:text-light-blue transition-colors duration-300 ml-auto"
-                      aria-expanded={openDropdowns[index]}
-                      aria-label="Toggle dropdown"
-                    >
-                      <ChevronDown 
-                        size={16}
-                        color="blue"
-                        className={`transform transition-transform duration-300 group-hover:rotate-180 ${
-                          openDropdowns[index] ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                  )}
-                </div>
-                  
+                  <div className='flex justify-between'>
+                    {item.dropdownItems ? (
+                      <>
+                        <Link
+                          to={item.link}
+                          className="block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                        <Link
+                          onClick={() => {
+                            toggleDropdown(index)
+                          }}
+                          className="p-1 hover:text-light-blue transition-colors duration-300"
+                          aria-expanded={openDropdowns[index]}
+                          aria-label="Toggle dropdown"
+                        >
+                          <ChevronDown 
+                            size={16}
+                            className={`transform transition-transform duration-300 ${openDropdowns[index] ? 'rotate-180' : ''}`}
+                          />
+                        </Link>
+                      </>
+                    ) : (
+                        <Link
+                          to={item.link}
+                          className='block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap'
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                    )}
+                  </div>
 
                   {item.dropdownItems && openDropdowns[index] && (
-                    <ul className='mt-2 pl-4 shadow-lg'>
-                      {item.dropdownItems.map((dropdownItem, dropIndex) => (
-                        <li key={dropIndex}  className='mb-2'>
-                          <Link 
-                            to={dropdownItem.link}
-                            className='block text-blue-50 hover:text-light-blue transition-colors duration-300'
+                    <ul className="mt-2 pl-4 shadow-lg">
+                      {item.dropdownItems.map((dropdownItems, dropIndex) => (
+                        <li key={dropIndex} className="mb-2">
+                          <Link
+                            to={dropdownItems.link}
+                            className="block px-4 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                            onClick={() => setIsMobileMenuOpen(false)}
                           >
-                            {dropdownItem.label}
+                            {dropdownItems.label}
                           </Link>
                         </li>
                       ))}
@@ -193,7 +197,7 @@ const Navbar = () => {
               ))}
             </div>
           )}
-      </div>
+        </div>
     </header>
   )
 }

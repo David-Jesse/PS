@@ -71,11 +71,10 @@ function App() {
             path="/habitats"
             element={
               <>
-              <HabitatsNav />
-              <HabitatsMain />
-            </>
-          }
-          
+                <HabitatsNav />
+                <HabitatsMain />
+              </>
+            }
           />
 
           <Route 
