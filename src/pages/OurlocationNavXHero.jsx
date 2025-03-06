@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import {  useState, useRef } from "react";
 import logoOne from '../assets/logoOne.png';
 import {ChevronDown, Menu, X} from 'lucide-react'
 import { Link} from "react-router-dom";
@@ -14,22 +14,6 @@ const Ourlocation = () => {
             [index]: !prevState[index],
         }))
     }
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            Object.entries(dropdownRefs.current).forEach(([key, ref]) => {
-                if(ref && !ref.contains(event.target)) {
-                    setOpenDropdowns(prev => ({
-                        ...prev,
-                        [key]: false
-                    }))
-                }
-            })
-        }
-
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
 
     
     const navItems = [
@@ -50,8 +34,8 @@ const Ourlocation = () => {
           label: 'Get Involved',
           link: '/getinvolved',
           dropdownItems: [
-            {label: 'Latest Events', link: '/latestevents'},
-            {label: 'Volunteering Opportunities', link: 'voluteering'}
+            {label: 'Latest Events', link: '/getinvolved/latestevents'},
+            {label: 'Volunteering Opportunities', link: '/getinvolved/volunteering'}
           ]
         },
     
@@ -137,61 +121,67 @@ const Ourlocation = () => {
         </nav>
       </header>
             
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white sm:w-full text-blue-50 px-4 py-6">
-            {navItems.map((item, index) => (
-                <div key={index} className="mb-4">
-                    <div className="flex items-center gap-1">
-                        <Link 
-                            to={item.link}
-                            className="block text-blue-50 transition-colors duration-300"
-                            onClick={(e) => {
-                                if(item.dropdownItems) {
-                                    e.preventDefault();
-                                    toggleDropdown(index)
+   {/*Mobile Menu Items */}
+   {isMobileMenuOpen && (
+    <div className='md:hidden bg-white sm:w-full font-semibold text-blue-50 px-4 py-6'>
+        {navItems.map((item, index) => (
+            <div key={index} className='mb-4'>
+                <div className='flex justify-between'>
+                    {item.dropdownItems ? (
+                        <>
+                            <Link
+                                to={item.link}
+                                className='block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap'
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                {item.label}
+                            </Link>
+                            <Link
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleDropdown(index)}
                                 }
-                            }}
-                        >
-                            {item.label}
-                        </Link>
-
-                        {item.dropdownItems && (
-                            <button
-                                onClick={() => toggleDropdown(index)}
-                                className="p-1 hover:text-blue transition-colors duration-300 ml-auto"
+                                className='p-1 hover:text-light-blue transition-colors duration-300'
                                 aria-expanded={openDropdowns[index]}
                                 aria-label="Toggle dropdown"
                             >
                                 <ChevronDown 
                                     size={16}
-                                    color="blue"
-                                    className={`transform transition-transform duration-300 ${
-                                        openDropdowns[index] ? 'rotate-180' : ''}`}
+                                    className={`transform transition-transform duration-300 ${openDropdowns[index] ? 'rotate-180' : ''}`}
                                 />
-                            </button>
-                        )}
-                    </div>
-
-                    {item.dropdownItems && openDropdowns[index] && (
-                        <ul className="mt-2 pl-4 shadow-lg">
-                            {item.dropdownItems.map((dropdownItem, dropIndex) => (
-                                <li key={dropIndex} className='mb-2'>
-                                    <Link 
-                                        to={dropdownItem.link}
-                                        className="block px-4 py-2 text-blue-50 hover:text-light-blue tranasition-colors duration-300 whitespace-nowrap"
-                                    >
-                                        {dropdownItem.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                            </Link>
+                        </>
+                    ) : (
+                        <Link
+                            to={item.link}
+                            className="block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                                {item.label}
+                        </Link>
                     )}
                 </div>
-            ))}
-        
-        </div>
-    )}
 
+                {item.dropdownItems && openDropdowns[index] && (
+                    <ul className='mt-2 pl-4 shadow-lg'>
+                        {item.dropdownItems.map((dropdownItems, dropIndex) => (
+                            <li key={dropIndex} className='mb-2'>
+                                <Link
+                                    to={dropdownItems.sublink}
+                                    className="block py-2 px-4 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    {dropdownItems.label}
+                                </Link>
+                            </li>
+                        ))}
+                    
+                    </ul>
+                )}
+            </div>
+        ))}
+    </div>
+)}
       <section className="flex flex-col md:w-1/2 sm:w-[90%] justify-center items-center md:pt-40 sm:py-30">
         <div className="md:space-y-2 sm:pt-10">
             <div className="md:w-[100%] sm:w-full md:py-1 sm:py-1 bg-white"></div>

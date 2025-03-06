@@ -50,8 +50,8 @@ const HabitatsNav = () => {
       label: 'Get Involved',
       link: '/getinvolved',
       dropdownItems: [
-        {label: 'Latest Events', link: '/latestevents'},
-        {label: 'Volunteering Opportunities', link: 'voluteering'}
+        {label: 'Latest Events', link: '/getinvolved/latestevents'},
+        {label: 'Volunteering Opportunities', link: '/getinvolved/volunteering'}
       ]
     },
 
@@ -77,7 +77,7 @@ const HabitatsNav = () => {
           </button>
 
           {/*Desktop Menu*/}
-          <ul className={`hidden md:flex font-bold md:gap-12 sm:gap-4 items-center &{
+          <ul className={`hidden md:flex font-bold md:gap-12 sm:gap-4 items-center {
             isMobileMenuOpen ? 'block' : 'hidden'}`}
           >
             {navItems.map((item, index) => (
@@ -172,7 +172,7 @@ const HabitatsNav = () => {
                                 className="block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                    {item.label}
+                                {item.label}
                             </Link>
                         )}
                     </div>
@@ -190,7 +190,6 @@ const HabitatsNav = () => {
                                     </Link>
                                 </li>
                             ))}
-                        
                         </ul>
                     )}
                 </div>
@@ -200,9 +199,9 @@ const HabitatsNav = () => {
 
        {/*Hero Section*/}
        <section className="md:flex sm:flex sm:flex-col items-center md:pt-20 sm:pt-10 w-[90%] mx-auto">
-          <div className='md:flex md:flex-row sm:flex sm:flex-col justify-between sm:w-full'>
+          <div className='md:flex md:flex-row sm:flex sm:flex-col justify-between md:w-[80%] sm:w-full'>
             <div className='md:w-1/2 sm:w-full'>
-              <div className="md:w-[52%] sm:w-[44%] md:py-1 sm:py-1 bg-white mb-2"></div>
+              <div className="md:w-[60%] sm:w-[44%] md:py-1 sm:py-1 bg-white mb-2"></div>
               <h1 className="md:text-6xl sm:text-3xl text-white font-bold sm:mb-3">HABITATS</h1> 
             </div>
 

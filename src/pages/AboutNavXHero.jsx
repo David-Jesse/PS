@@ -1,13 +1,14 @@
-import { useEffect, useState, useRef } from "react"
+import { useState, useRef } from "react"
 import logoOne from '../assets/logoOne.png'
 import headerBanner from '../assets/headerBanner.png'
 import { ChevronDown, X, Menu } from "lucide-react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Aboutus = () => {
     const [openDropdowns, setOpenDropdowns] = useState([])
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const dropdownRefs = useRef({})
+    const navigate = useNavigate()
 
     const toggleDropdown = (index) => {
       setOpenDropdowns((prevState) => ({
@@ -16,21 +17,10 @@ const Aboutus = () => {
       }))
     }
 
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        Object.entries(dropdownRefs.current).forEach(([key, ref]) => {
-          if(ref && !ref.contains(event.target)) {
-            setOpenDropdowns(prev => ({
-              ...prev,
-              [key]: false
-            }))
-          }
-        })
-      }
-
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
+    const handleNavigation = (link) => {
+      setIsMobileMenuOpen(false)
+      navigate(link)
+  }
 
     const navItems = [
       {label: 'About Us', link: '/about' },
@@ -50,8 +40,8 @@ const Aboutus = () => {
         label: 'Get Involved',
         link: '/getinvolved',
         dropdownItems: [
-          {label: 'Latest Events', link: '/latestevents'},
-          {label: 'Volunteering Opportunities', link:'/volunteering'}
+          {label: 'Latest Events', link: '/getinvolved/latestevents'},
+          {label: 'Volunteering Opportunities', link:'/getinvolved/volunteering'}
         ]
       },
   
@@ -148,7 +138,7 @@ const Aboutus = () => {
                     <Link
                       to={item.link}
                       className="block px-1 py-2 text-blue-50 hover:text-lgiht-blue transition-colors duration-300 whitespace-nowrap"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => handleNavigation(item.link)}
                     > 
                       {item.label}
                     </Link>
@@ -185,7 +175,7 @@ const Aboutus = () => {
                       <Link
                         to={dropdownItem.link}
                         className="block py-2 px-4 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => handleNavigation(dropdownItem.link)}
                       >
                           {dropdownItem.label}
                       </Link>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import logoOne from '../assets/logoOne.png';
 import middlebroughHeader from '../assets/middlebroughHeader.png';
 import { ChevronDown, X, Menu } from "lucide-react";
@@ -10,6 +10,7 @@ const Middlebrough = () => {
     const dropdownRefs = useRef({})
     const navigate = useNavigate();
 
+ 
     const toggleDropdown = (index) => {
         setOpenDropdowns((prevState) => ({
             ...prevState,
@@ -23,24 +24,9 @@ const Middlebrough = () => {
             toggleDropdown(index)
         } else {
             navigate(item.link);
+            setIsMobileMenuOpen(false)
         }
     }
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            Object.entries(dropdownRefs.current).forEach(([key, ref]) => {
-                if(ref && !ref.contains(event.target)) {
-                    setOpenDropdowns(prev => ({
-                        ...prev,
-                        [key]: false
-                    }))
-                }
-            })
-        }
-
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
 
     const navItems = [
         {label: 'About Us', link: '/about' },
@@ -58,10 +44,10 @@ const Middlebrough = () => {
     
         {
           label: 'Get Involved',
-          link: '/get-involved',
+          link: '/getinvolved',
           dropdownItems: [
-            {label: 'Latest Events', link: '/latest-events'},
-            {label: 'Volunteering Opportunities', link: '/opportunities'}
+            {label: 'Latest Events', link: '/getinvolved/latestevents'},
+            {label: 'Volunteering Opportunities', link: '/getinvolved/volunteering'}
           ]
         },
     
@@ -133,6 +119,7 @@ const Middlebrough = () => {
                                                 <Link 
                                                     to={dropdownItem.link}
                                                     className='block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap'
+                                                    onClick={() => setIsMobileMenuOpen(false)}
                                                 >
                                                     {dropdownItem.label}
                                                 </Link>
@@ -146,64 +133,72 @@ const Middlebrough = () => {
                 </nav>
             </header>
 
-            {/*Mobile Menu Items */}
             {isMobileMenuOpen && (
-                <div className="md:hidden bg-white sm:w-full text-blue-50 px-4 py-6">
-                    {navItems.map((item, index) => (
-                        <div key={index} className="mb-4">
-                            <div className="flex items-center gap-1">
-                                <Link 
-                                    to={item.link}
-                                    className="block text-blue-50 transition-colors duration-300"    
-                                    onClick={(e) => handleNavItemClick(item, index, e)}
-                                >
-                                    {item.label}
-                                </Link>
+              <div className="md:hidden bg-white sm:w-full text-blue-50 px-4 py-6">
+                  {navItems.map((item, index) => (
+                      <div key={index} className="mb-4">
+                          <div className="flex items-center gap-1">
+                              <Link 
+                                  to={item.link}
+                                  className="block text-blue-50 transition-colors duration-300"
+                                  onClick={(e) => handleNavItemClick(item, index, e)}
+                              >
+                                  {item.label}
+                              </Link>
+      
+                              {item.dropdownItems && (
+                                  <button
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleDropdown(index)
+                                      } 
+                                    }
+                                      className="p-1 hover:text-blue transition-colors duration-300 ml-auto"
+                                      aria-expanded={openDropdowns[index]}
+                                      aria-label="Toggle dropdown"
+                                  >
+                                      <ChevronDown 
+                                          size={16}
+                                          color="blue"
+                                          className={`transform transition-transform duration-300 ${
+                                              openDropdowns[index] ? 'rotate-180' : ''}`}
+                                      />
+                                  </button>
+                              )}
+                          </div>
+      
+                          {item.dropdownItems && openDropdowns[index] && (
+                              <ul className="mt-2 pl-4 shadow-lg">
+                                  {item.dropdownItems.map((dropdownItem, dropIndex) => (
+                                      <li key={dropIndex} className='mb-2'>
+                                          <Link 
+                                              to={dropdownItem.link}
+                                              className="block px-4 py-2 text-blue-50 hover:text-light-blue tranasition-colors duration-300 whitespace-nowrap"
+                                              onClick={() => setIsMobileMenuOpen(false)}
+                                          >
+                                              {dropdownItem.label}
+                                          </Link>
+                                      </li>
+                                  ))}
+                              </ul>
+                          )}
+                      </div>
+                  ))}
 
-                                {item.dropdownItems && (
-                                    <button
-                                        onClick={() => toggleDropdown(index)}
-                                        className="p-1 hover:text-light-blue transition-colors duration-300 ml-auto"
-                                        aria-expanded= {openDropdowns[index]}
-                                        aria-label = 'Toggle Dropdown'
-                                    >
-                                        <ChevronDown 
-                                            size={16}
-                                            color="blue"
-                                            className={`transform transition-transform duration-300 ${
-                                                openDropdowns[index] ? 'rotate-180' : ''}`}
-                                        />
-                                    </button>
-                                )}
-                            </div>
+                
+              </div>
+          )}
 
-                            {item.dropdownItems && openDropdowns[index] && (
-                                <ul className="mt-2 pl-4 shadow-lg">
-                                    {item.dropdownItems.map((dropdownItem, dropIndex) => (
-                                        <li key={dropIndex} className="mb-2">
-                                            <Link 
-                                                to={dropdownItem.link}
-                                                className="block px-4 py-2 text-blue-50 transition-colors duration-300 whitespace-nowrap"
-                                            >
-                                                {dropdownItem.label}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            )}
-
-            <section className="flex flex-col md:w-[65%] sm:w-[90%] justify-center items-center md:pt-40 sm:py-30">
-                <div className="md:space-y-2 sm:pt-10">
-                    <div className="md:w-full sm:w-full md:py-1 sm:py-1 bg-white"></div>
-                    <h1 className="md:text-6xl sm:text-3xl text-white font-bold">MIDDLESBROUGH</h1>
-                </div>
-            </section>
-        </div>
-    )
+          <section className="flex flex-col md:w-[65%] sm:w-[90%] justify-center items-center md:pt-40 sm:py-30">
+            <div className="md:space-y-2 sm:pt-10">
+              <div className="md:w-full sm:w-full md:py-1 sm:py-1 bg-white"></div>
+              <h1 className="md:text-6xl sm:text-3xl text-white font-bold">MIDDLESBROUGH</h1>
+            </div>
+         </section>
+    
+   
+            </div>
+    );
 }
 
 export default Middlebrough;

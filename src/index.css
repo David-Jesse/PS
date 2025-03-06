@@ -44,3 +44,7 @@ img {
   padding: 12px 16px;
   border: none;
 }
+
+.clip-path-dent-top {
+  clip-path: polygon(20% 0, 0 100%, 90% 20%, 0 40%);
+}

@@ -2,9 +2,10 @@ import { useState, useRef} from 'react';
 import logoOne from '../assets/logoOne.png';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import {Link} from 'react-router-dom';
-import backgroundImage from '../assets/backgroundImage.png';
+import backgroundV from '../assets/backgroundV.png';
 
-const GetInvolved = () => {
+
+const VolunteeringNav = () => {
     const [openDropdowns, setOpenDropdowns] = useState([]);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dropdownRefs = useRef({})
@@ -16,7 +17,7 @@ const GetInvolved = () => {
         }))
     }
 
-      const navItems = [
+    const navItems = [
         {label: 'About Us', link: '/about' },
         {
           label: 'Habitats',
@@ -43,26 +44,26 @@ const GetInvolved = () => {
         {label: 'News', link: '/news'}
        ]
 
-       return (
-        <div className='bg-cover md:pb-20 sm:pb-10 sm:w-full bg-blue-100' style={{backgroundImage: `url(${backgroundImage})`}}>
+    return (
+        <div className='bg-cover md:pb-20 sm:pb-10 sm:w-full bg-blue-100' style={{backgroundImage: `url(${backgroundV})`}}>
             <header className='w-[90%] mx-auto'>
                 <nav className='flex justify-between items-center py-5'>
                     <div className='flex gap-4'>
-                        <Link to='#'>
+                        <Link to='/'>
                             <img src={logoOne} alt="logo image" />
                         </Link>
-                    </div>
+                    </div>                
 
-                    <button
+                    <button 
                         className='md:hidden block p-2 text-white hover:text-light-blue'
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
-                        {isMobileMenuOpen ? <X size={24}/> : <Menu size={24}/>}
+                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
 
                     {/* Desktop Menu */}
-                    <ul className={`hidden md:flex font-bold md:gap-12 items-center {
-                        isMobileMenuOpen ? 'block' : 'hidden'}`}
+                    <ul className={`hidden md:flex font-bold md:gap-12 items-center 
+                        ${isMobileMenuOpen ? 'hidden' : 'block'}`}
                     >
                         {navItems.map((item, index) => (
                             <li
@@ -70,10 +71,16 @@ const GetInvolved = () => {
                                 ref={(el) => (dropdownRefs.current[index] = el)}
                                 className='relative group'
                             >
-                                <div className='flex items-center gap-1'>
+                                <div className='flex items-center gap-1 relative'>
                                     <Link
                                         to={item.link}
-                                        className='text-white hover:text-light-blue transition duration-300'
+                                        className='text-white hover:text-light-blue transition duration-300 ease-in-out'
+                                        onClick={(e) => {
+                                            if(navItems.dropdownItems) {
+                                                e.preventDefault();
+                                                toggleDropdown(index);
+                                            }
+                                        }}
                                     >
                                         {item.label}
                                     </Link>
@@ -83,7 +90,7 @@ const GetInvolved = () => {
                                             onClick={() => toggleDropdown(index)}
                                             className='p-1 hover:text-light-blue transition-colors duration-300'
                                             aria-expanded={openDropdowns[index]}
-                                            aria-label="Toggle dropdown"
+                                            aria-label = "Toggle Dropdown"
                                         >
                                             <ChevronDown 
                                                 size={24}
@@ -94,45 +101,43 @@ const GetInvolved = () => {
                                     )}
                                 </div>
 
-                                  {/* Indicator below the nav menu items */}
-                                  <div className={`absolute left-0 right-0 h-1 bg-white mt-4 scale-x-0 group-hover:scale-x-100 transition-transform origin-left`}></div>
+                                 {/*Indicator below the nav menu items */}
+                                 <div className={`absolute left-0 right-0 h-1 bg-white mt-4 scale-x-0 group-hover:scale-x-100 transition-transform origin-left`}></div>
 
-                                    {/* Dropdown Menu for desktop */}
-                                    {item.dropdownItems && (
-                                        <ul
-                                            className={`absolute top-full left-0 bg-white shadow-lg mt-4 rounded-md py-2 min-w-[100px] z-10 transition-all transform origin-top scale-y-0 group-hover:scale-y-100 group-hover:opacity-100 opacity-0 duration-300 whitespace-nowrap`}
-                                        >
-                                            {item.dropdownItems.map((dropdownItem, dropIndex) => (
-                                                <li
-                                                    key={dropIndex}
+                                 {/*Dropdown Menu for Desktop */}
+                                 {item.dropdownItems && (
+                                    <ul
+                                        className={`absolute top-full left-0 bg-white shadow-lg mt-4 rounded-md py-2 min-w-[100px] z-10 transition-all transform  origin-top scale-y-0 group-hover:scale-y-100 group-hover:opacity-100 opacity-0 duration-300 whitespace-nowrap`}
+                                    >
+                                        {item.dropdownItems.map((dropdownItem, dropIndex) => (
+                                            <li key={dropIndex}>
+                                                <Link
+                                                    to={dropdownItem.link}
+                                                    className='block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-light-blue transiton-colors durtaion-300 whitespace-nowrap'
                                                 >
-                                                    <Link
-                                                        to={dropdownItem.link}
-                                                        className='block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap'
-                                                    >
-                                                        {dropdownItem.label}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
+                                                    {dropdownItem.label}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                 )}
                             </li>
                         ))}
                     </ul>
                 </nav>
             </header>
 
-             {/*Mobile Menu Items */}
-             {isMobileMenuOpen && (
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
                 <div className='md:hidden bg-white sm:w-full font-semibold text-blue-50 px-4 py-6'>
                     {navItems.map((item, index) => (
                         <div key={index} className='mb-4'>
-                            <div className='flex justify-between'>
-                                {item.dropdownItems ? (
+                            <div className='flex justify-between '>
+                                {navItems.dropdownItems ? (
                                     <>
                                         <Link
                                             to={item.link}
-                                            className='block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap'
+                                            className='block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap ease-in-out'
                                             onClick={() => setIsMobileMenuOpen(false)}
                                         >
                                             {item.label}
@@ -140,31 +145,32 @@ const GetInvolved = () => {
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                toggleDropdown(index)}
-                                            }
+                                                toggleDropdown(index);
+                                            }}
                                             className='p-1 hover:text-light-blue transition-colors duration-300'
                                             aria-expanded={openDropdowns[index]}
-                                            aria-label="Toggle dropdown"
+                                            aria-label="Toggle Dropdown"
                                         >
                                             <ChevronDown 
-                                                size={16}
-                                                className={`transform transition-transform duration-300 ${openDropdowns[index] ? 'rotate-180' : ''}`}
+                                                size={24}
+                                                color='blue'
+                                                classname={`transform transition-transform duration-300 ${openDropdowns[index] ? 'rotate-180' : ''}`}
                                             />
                                         </button>
                                     </>
                                 ) : (
                                     <Link
                                         to={item.link}
-                                        className="block px-1 py-2 text-blue-50 hover:text-light-blue transition-colors duration-300 whitespace-nowrap"
+                                        className="block px-1 py-2 text-blue-50 hover:text-light-blue transiton-colors duration-300 whitespace-nowrap"
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
-                                            {item.label}
+                                        {item.label}
                                     </Link>
                                 )}
                             </div>
 
                             {item.dropdownItems && openDropdowns[index] && (
-                                <ul className='mt-2 pl-4 shadow-lg'>
+                                <ul className="mt-2 pl-4 shadow-lg">
                                     {item.dropdownItems.map((dropdownItems, dropIndex) => (
                                         <li key={dropIndex} className='mb-2'>
                                             <Link
@@ -176,22 +182,23 @@ const GetInvolved = () => {
                                             </Link>
                                         </li>
                                     ))}
-                                
                                 </ul>
                             )}
                         </div>
                     ))}
+                
                 </div>
             )}
 
-             <section className='flex flex-col md:w-1/2 sm:w-[90%] justify-center items-center md:pt-20 sm:py-30'>
-                <div className='md:space-y-2 sm:pt-10'>
-                    <div className='w-full md:py-1 sm:py-1 bg-white'></div>
-                    <h1 className='md:text-6xl sm:text-3xl text-white font-bold'>GET INVOLVED</h1>
+            <section className="flex flex-col md:w-1/2 sm:w-[90%] justify-center items-center md:py-20">
+                <div className='md:space-y-2 sm:pt-10 w-[70%]'>
+                    <div className='md:w-[100%] sm:w-full py-1 bg-white'></div>
+                    <h1 className="md:text-6xl text-white font-bold sm:text-3xl">VOLUNTEERING OPPORTUNITIES</h1>
                 </div>
-             </section>
+            </section>
         </div>
-       )
+    )
+
 }
 
-export default GetInvolved;
+export default VolunteeringNav;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import logoOne from '../assets/logoOne.png';
 import {ChevronDown, Menu, X} from 'lucide-react'
 import { Link } from "react-router-dom";
@@ -7,23 +7,6 @@ const Navbar = () => {
   const [openDropdowns, setOpenDropdowns] = useState({})
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const dropdownRefs = useRef({})
-
-  // Handle click outside to close dropdowns
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      Object.entries(dropdownRefs.current).forEach(([key, ref]) => {
-        if (ref && !ref.contains(event.target)) {
-          setOpenDropdowns(prev => ({
-            ...prev,
-            [key]: false
-          }))
-        }
-      })
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-   }, []);
 
    const navItems = [
     {label: 'About Us', link: '/about' },
@@ -43,8 +26,8 @@ const Navbar = () => {
       label: 'Get Involved',
       link: '/getinvolved',
       dropdownItems: [
-        {label: 'Latest Events', link: '/latestevents'},
-        {label: 'Volunteering Opportunities', link: '/volunteering'}
+        {label: 'Latest Events', link: '/getinvolved/latestevents'},
+        {label: 'Volunteering Opportunities', link: '/getinvolved/volunteering'}
       ]
     },
 

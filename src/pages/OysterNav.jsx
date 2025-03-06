@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import logoOne from '../assets/logoOne.png';
 import { ChevronDown, Menu, X } from "lucide-react";
 import {Link, useNavigate} from "react-router-dom";
@@ -26,22 +26,6 @@ const OysterNav = () => {
     }
   }
 
-  useEffect(() => {
-      const handleClickOutside = (event) => {
-          Object.entries(dropdownRefs.current).forEach(([key, ref]) => {
-              if(ref && !ref.contains(event.target)) {
-                  setOpenDropdowns(prev => ({
-                      ...prev,
-                      [key]: false
-                  }))
-              }
-          })
-      }
-
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
   const navItems = [
         {label: 'About Us', link: '/about' },
         {
@@ -60,8 +44,8 @@ const OysterNav = () => {
           label: 'Get Involved',
           link: '/getinvolved',
           dropdownItems: [
-            {label: 'Latest Events', link: '/latestevents'},
-            {label: 'Volunteering Opportunities', link: 'voluteering'}
+            {label: 'Latest Events', link: '/getinvolved/latestevents'},
+            {label: 'Volunteering Opportunities', link: '/getinvolved/volunteering'}
           ]
         },
     
@@ -199,16 +183,15 @@ const OysterNav = () => {
               </div>
           )}
 
-          <section className='flex flex-col items-center pt-20 mx-auto  justify-center'>
+        <section className='flex flex-col items-center pt-20 mx-auto  justify-center'>
             <div className='md:space-y-2 sm:pt-4 md:w-[60%] sm:w-[90%]'>
-              <div className='md:w-[52%] sm:w-[74%] md:py-1 sm:py-1 bg-white'></div>
-              <h1 className='md:text-6xl sm:text-4xl text-white sm:mt-2 font-bold'>OYSTER REEF</h1>
-              <p className='text-white text-lg font-normal sm:text-left sm:mt-4'>Showcase your solution to amplify the reach of your business and connect with other businesses,
+                <div className='md:w-[52%] sm:w-[74%] md:py-1 sm:py-1 bg-white'></div>
+                <h1 className='md:text-6xl sm:text-4xl text-white sm:mt-2 font-bold'>OYSTER REEF</h1>
+                <p className='text-white text-lg font-normal sm:text-left sm:mt-4'>Showcase your solution to amplify the reach of your business and connect with other businesses,
                 investors and local authorities to develop new business opportunities, business and connect.
                 </p>
             </div>
-           
-          </section>
+        </section>
 
     </div>
   )
