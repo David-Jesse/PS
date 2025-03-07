@@ -16,11 +16,11 @@ const Footer = () => {
           <div>
             <h3 className='text-lg font-bold'>Quick Links</h3>
             <ul className='mt-4 space-y-4 text-base font-normal'>
-              <li><a href="#" className=' hover:text-light-blue transition-colors durtion-300'>About Us</a></li>
-              <li><a href="#" className=' hover:text-light-blue transition-colors durtion-300'>Locations</a></li>
-              <li><a href="#" className=' hover:text-light-blue transition-colors durtion-300'>Get Involved</a></li>
-              <li><a href="#" className=' hover:text-light-blue transition-colors durtion-300'>Events</a></li>
-              <li><a href="#" className=' hover:text-light-blue transition-colors durtion-300'>News</a></li>
+              <li><a href="/about" className=' hover:text-light-blue transition-colors durtion-300'>About Us</a></li>
+              <li><a href="/ourlocation" className=' hover:text-light-blue transition-colors durtion-300'>Locations</a></li>
+              <li><a href="/getinvolved" className=' hover:text-light-blue transition-colors durtion-300'>Get Involved</a></li>
+              <li><a href="/getinvolved/latestevents" className=' hover:text-light-blue transition-colors durtion-300'>Events</a></li>
+              <li><a href="/news" className=' hover:text-light-blue transition-colors durtion-300'>News</a></li>
               <li><a href="#" className=' hover:text-light-blue transition-colors durtion-300'>Contact Us</a></li>
             </ul>
           </div>
